@@ -1,0 +1,38 @@
+<div class="tips">
+  <h2 class="title">Turn your estimate into action</h2>
+  <p class="text">
+    Understanding your company’s emissions is an important step in your journey to Net Zero, but it shouldn’t end there.
+    Go to the SME Climate Hub to make your public commitment to Net Zero, access tangible tips for reducing your
+    emissions and get recognized for being a climate leader.
+  </p>
+  <p class="text">
+    <a
+      class="n-button"
+      (click)="logClick('SeeTipsButtonClick')"
+      href="https://smeclimatehub.org/how-it-works/"
+      target="_blank"
+    >
+      Continue your journey
+      <mat-icon svgIcon="n:arrow-right"></mat-icon>
+    </a>
+    <mat-icon class="smech" svgIcon="n:sme-climate-hub"></mat-icon>
+  </p>
+</div>
+<div class="benchmark">
+  <h2 class="title">Benchmark against companies in your sector</h2>
+  <p class="text">
+    On our Industry CO₂ Insights page you can benchmark your greenhouse gas emissions agaist similar companies in your
+    sector and country. This will help you understand how your company is performing on its path to Net Zero.
+  </p>
+  <p class="text insights">
+    <a
+      class="n-button n-button--primary"
+      (click)="logClick('BenchmarkButtonClick')"
+      [href]="getBenchmarkUrl()"
+      target="_blank"
+    >
+      Industry CO₂ insights
+      <mat-icon svgIcon="n:arrow-right"></mat-icon>
+    </a>
+  </p>
+</div>

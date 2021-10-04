@@ -1,0 +1,65 @@
+@use '../../../styles/typography' as typography;
+
+.n-checkbox {
+  @include typography.font(h6);
+
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin: 32px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.n-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: solid 2px #000;
+}
+
+.n-checkbox:hover input:checked ~ .checkmark:after {
+  display: block;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid #aaa 2px;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.n-checkbox input:not(:checked) ~ .checkmark {
+  background-color: #fff;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.n-checkbox input:not(:checked) ~ .checkmark:after {
+  display: block;
+}
+
+.n-checkbox .checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid black 2px;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

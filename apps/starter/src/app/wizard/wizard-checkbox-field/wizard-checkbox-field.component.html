@@ -1,0 +1,5 @@
+<label class="n-checkbox" [for]="getId()"
+  >{{ field.label }}
+  <input class="input" type="checkbox" [name]="field.path" [formControl]="$any(form.get(field.path))" [id]="getId()" />
+  <span class="checkmark"></span>
+</label>

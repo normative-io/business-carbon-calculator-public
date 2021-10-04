@@ -1,0 +1,62 @@
+@use '../../../styles/typography' as typography;
+
+.group {
+  border: 0;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+
+.n-radio {
+  display: flex;
+
+  &__input {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 16px 16px 16px 0;
+    font: inherit;
+    width: 23px;
+    height: 23px;
+    border: 2px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    flex-shrink: 0;
+
+    &::before {
+      content: '';
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      transform: scale(0);
+      box-shadow: inset 24px 24px var(--color-accent);
+    }
+
+    &:checked::before {
+      transform: scale(1);
+    }
+  }
+
+  &__label {
+    @include typography.font(h6);
+
+    margin: 16px;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .share-prompt {
+      color: rgba(163, 164, 169, 1);
+      font-size: 18px;
+    }
+
+    .share-icon {
+      color: #000;
+      font-size: 20px;
+    }
+  }
+}

@@ -1,0 +1,221 @@
+<form *ngIf="page$ | async as page" class="root" [formGroup]="form" (submit)="next(AnimationDirection.NEXT)">
+  <header class="toolbar">
+    <a aria-label="Return to homepage" class="toolbar__logo" (click)="exit()" routerLink="/dashboard">
+      <mat-icon svgIcon="n:n"></mat-icon>
+    </a>
+  </header>
+
+  <div
+    class="n-container context"
+    *ngIf="isSplashPage(page) || (largeViewport$ | async)"
+    [class.context--intro]="page.id === 'Welcome'"
+    [class.context--splash]="isSplashPage(page)"
+    [class.n-container--inverted]="!isSplashPage(page)"
+  >
+    <nav class="trilogy" *ngIf="pages$ | async as pages">
+      <button
+        *ngFor="let name of trilogy; let i = index"
+        [attr.aria-current]="page.trilogy === i + 1 ? 'step' : null"
+        class="trilogy__item"
+        (click)="goToTrilogy(i + 1, pages)"
+        type="button"
+      >
+        {{ i + 1 }}. {{ name }}
+      </button>
+    </nav>
+
+    <div class="header">
+      <p *ngIf="isExpensesPage(page)" class="header__eyebrow">{{ timePeriod$ | async }}</p>
+      <h1 class="header__title">
+        <mat-icon *ngIf="page.icon" class="title-icon" [svgIcon]="'n:' + page.icon"></mat-icon>
+        <span [innerHTML]="page.title | boldify"></span>
+      </h1>
+    </div>
+
+    <p *ngIf="page.description" class="context__description" [innerHTML]="page.description | boldify"></p>
+
+    <aside *ngIf="page.why" class="explanation">
+      <h1 class="explanation__title">
+        <mat-icon class="explanation__icon" svgIcon="n:question"></mat-icon>
+        Why are we asking this?
+      </h1>
+      <p class="explanation__body">{{ page.why }}</p>
+    </aside>
+
+    <div *ngIf="page.id === 'Welcome'" class="context__body">
+      <p><strong>Here’s what you’ll need to gather:</strong></p>
+      <ul>
+        <li>
+          <mat-icon class="icon" svgIcon="n:capital"></mat-icon>
+          Number of employees, size of facilities, annual revenue
+        </li>
+        <li>
+          <mat-icon class="icon" svgIcon="n:smoke"></mat-icon>
+          Heating costs and information about company-owned vehicles
+        </li>
+        <li>
+          <mat-icon class="icon" svgIcon="n:plane"></mat-icon>
+          Company expenses in areas like business travel, transport / freight, capital goods and more
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="page.id === 'BeforeWeStart'" class="context__body">
+      <ol>
+        <li>
+          <h2>Thorough means accurate</h2>
+          <p>
+            No need to be perfect, but the more data you put into the calculator, the more accurate and credible your
+            emissions estimate will be.
+          </p>
+        </li>
+
+        <li>
+          <h2>Nothing extra, it all factors in</h2>
+          <p>
+            Normative’s comprehensive emissions engine will attach CO2 equivalents to the business expenses you provide
+            (large and small). All data that we ask for either factors into your overall emissions estimate or industry
+            benchmarking.
+          </p>
+        </li>
+        <li>
+          <h2>Save the planet, we’ll save your data</h2>
+          <p>
+            Your profile saves as you go, so you can pick up where you left off or edit what you previously entered.
+          </p>
+        </li>
+      </ol>
+    </div>
+
+    <div *ngIf="page.id === 'ExpensesIntro'" class="context__body">
+      <ol>
+        <li>
+          <h2>Start with the big stuff</h2>
+          <p>Focus on your biggest expenses first as they’ll likely have the most impact on your emissions estimate.</p>
+        </li>
+
+        <li>
+          <h2>Feel free to jump around</h2>
+          <p>
+            Our spend categories may not fit your expense structure. Skip around if you need to and match to the best of
+            your ability.
+          </p>
+        </li>
+        <li>
+          <h2>Phone a friend(ly) accountant</h2>
+          <p>You may want to complete this next section with your company’s finance guru (unless that’s you).</p>
+        </li>
+      </ol>
+    </div>
+
+    <n-wizard-navigation
+      *ngIf="isSplashPage(page)"
+      class="context__navigation"
+      (exit)="exit()"
+      [exitLabel]="!(page === pages[0] || page === pages[1]) && (largeViewport$ | async) ? 'Save & exit' : undefined"
+      (next)="next(AnimationDirection.NONE)"
+      [nextLabel]="page.nextLabel ?? 'Next question'"
+      (previous)="previous(AnimationDirection.NONE)"
+      [previousLabel]="!(page === pages[0] || page === pages[1]) ? 'Back' : 'Cancel'"
+      [warning]="warning$ | async"
+    >
+    </n-wizard-navigation>
+  </div>
+
+  <div
+    *ngIf="(isQuestionPage(page) || isExpensesPage(page)) && (questions$ | async) as questions"
+    class="n-container input"
+    [class.input--expenses]="isExpensesPage(page)"
+  >
+    <n-wizard-progress
+      *ngIf="questions.indexOf(page) + 1 as displayIndex"
+      class="progress"
+      [current]="displayIndex"
+      [label]="displayIndex + ' of ' + questions.length"
+      [max]="questions.length"
+      [min]="1"
+      [offset]="-1"
+    >
+      <span>{{ displayIndex }} / {{ questions.length }}</span>
+
+      <h1 *ngIf="!(largeViewport$ | async)" class="progress__title">
+        <span [innerHTML]="page.title | boldify"></span>
+        <mat-icon *ngIf="page.icon" [svgIcon]="'n:' + page.icon" class="progress__icon"></mat-icon>
+      </h1>
+    </n-wizard-progress>
+
+    <div
+      *ngIf="isQuestionPage(page)"
+      class="fields"
+      [@.disabled]="direction === AnimationDirection.NONE"
+      [style.--direction]="direction"
+      [style.--top]="(largeViewport$ | async) ? '50%' : '0px'"
+    >
+      <div *ngFor="let currentPage of [page]" class="fields__inner" [@slide]>
+        <ng-container *ngFor="let field of currentPage.fields; let index = index">
+          <!-- $any(field) used below as switch statements do not support type narrowing -->
+          <!-- https://github.com/angular/angular/issues/20780 -->
+          <ng-container [ngSwitch]="field.type">
+            <n-wizard-unit-field
+              *ngSwitchCase="'unit'"
+              [eyebrow]="index === 0 ? (timePeriod$ | async) : null"
+              [field]="$any(field)"
+              [form]="form"
+              (saveOnFocusOut)="saveOnFocusOut()"
+            ></n-wizard-unit-field>
+            <n-wizard-radio-field
+              *ngSwitchCase="'radio'"
+              [eyebrow]="index === 0 ? (timePeriod$ | async) : null"
+              [field]="$any(field)"
+              [form]="form"
+            ></n-wizard-radio-field>
+            <n-wizard-checkbox-field *ngSwitchCase="'checkbox'" [field]="$any(field)" [form]="form">
+            </n-wizard-checkbox-field>
+            <n-wizard-datepicker-field
+              *ngSwitchCase="'date'"
+              [field]="$any(field)"
+              [form]="form"
+              (saveOnFocusOut)="saveOnFocusOut()"
+            >
+            </n-wizard-datepicker-field>
+            <n-wizard-single-field
+              *ngSwitchDefault
+              [eyebrow]="index === 0 ? (timePeriod$ | async) : null"
+              [field]="$any(field)"
+              [form]="form"
+              (saveOnFocusOut)="saveOnFocusOut()"
+            ></n-wizard-single-field>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <n-wizard-expenses
+      *ngIf="isExpensesPage(page)"
+      class="input__expenses"
+      [categories]="page.categories"
+      [form]="form"
+      (saveOnFocusOut)="saveOnFocusOut()"
+    ></n-wizard-expenses>
+
+    <n-wizard-navigation
+      class="input__navigation"
+      [disabled]="isQuestionPage(page) && hasErrors(page)"
+      (exit)="exit()"
+      [exitLabel]="(largeViewport$ | async) ? 'Save & exit' : ''"
+      (next)="next()"
+      [nextLabel]="page.nextLabel ?? 'Next question'"
+      (previous)="previous()"
+      [previousLabel]="page !== pages[0] ? 'Back' : undefined"
+      [warning]="warning$ | async"
+    ></n-wizard-navigation>
+  </div>
+
+  <div
+    *ngIf="isSplashPage(page) && (largeViewport$ | async)"
+    class="input splash"
+    [class.splash--expenses]="page.id === 'ExpensesIntro'"
+  ></div>
+
+  <n-wizard-loader *ngIf="isLoadingPage(page)" [page]="page"></n-wizard-loader>
+</form>

@@ -1,0 +1,83 @@
+@use 'colors' as colors;
+@use 'typography' as typography;
+
+.n-button {
+  @include typography.font(button);
+
+  --background: var(--color-background);
+  --hover: #{colors.get-primary-color(100)};
+  --text: var(--color-primary);
+
+  appearance: none;
+  align-items: center;
+  background: var(--background);
+  border: 0;
+  border-radius: 0;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  height: 48px;
+  justify-content: center;
+  padding: 12px 24px;
+  text-decoration: none;
+  transition: background 0.1s ease-in-out;
+
+  &:focus,
+  &:hover {
+    background: var(--hover);
+  }
+
+  &[disabled] {
+    --hover: var(--background);
+    --text: #c5c5c5;
+
+    cursor: default;
+  }
+
+  mat-icon.mat-icon {
+    font-size: 16px;
+    margin-left: 0.5em;
+  }
+
+  &__arrow {
+    transition: transform 0.1s ease-in-out;
+
+    a.n-button:hover &,
+    button.n-button:enabled:hover & {
+      transform: rotate(45deg);
+    }
+  }
+
+  &--primary {
+    --background: var(--color-primary);
+    --hover: var(--background);
+    --text: var(--color-background);
+
+    &[disabled] {
+      --text: #fff;
+      --background: #a3a4a9;
+    }
+  }
+
+  &--outlined {
+    --hover: transparent;
+
+    background: transparent;
+    border: 2px solid var(--background);
+    color: var(--background);
+
+    &[disabled] {
+      --background: #c5c5c5;
+      --hover: transparent;
+    }
+  }
+}
+
+// Material
+
+:root {
+  .mat-icon-button[mat-icon-button] {
+    border-radius: 100%;
+    padding: 0;
+  }
+}

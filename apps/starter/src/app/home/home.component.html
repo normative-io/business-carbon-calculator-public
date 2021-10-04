@@ -1,0 +1,99 @@
+<n-home-header
+  [country]="country$ | async"
+  [entries]="(entries$ | async) || []"
+  [entry]="(entry$ | async) || undefined"
+  (entryChange)="onEntryChange($event)"
+  [organization]="(organization$ | async)?.name"
+  [sector]="sector$ | async"
+  (settingsClick)="onSettingsClick()"
+></n-home-header>
+
+<div class="grid">
+  <n-home-total-emissions
+    *ngIf="(showImpact$ | async) && (impact$ | async) as impact"
+    class="column"
+    [entry]="(entry$ | async)?.rawClientState || undefined"
+    [impact]="impact"
+  >
+    <h2 class="column__title">
+      <strong>Estimated total emissions</strong>
+      <span class="column__title-unit">
+        tonnes CO₂e
+        <mat-icon
+          class="column__title-icon"
+          svgIcon="n:question"
+          matTooltip="Metric tonnes of CO2 equivalence, the standard unit for measuring greenhouse gas emissions' global warming impact"
+        >
+        </mat-icon>
+      </span>
+    </h2>
+  </n-home-total-emissions>
+
+  <div *ngIf="!(showImpact$ | async)" class="column estimate">
+    <h1 class="title">Continue where you left off?</h1>
+    <div class="body">
+      <p>Last time you were here you started estimating your company emissions, would you like to continue?</p>
+      <p class="highlight">In order to show you an estimation we need:</p>
+      <ul>
+        <li>Number of employees, size of facilities, annual revenue</li>
+        <li>Heating costs and information about company-owned vehicles</li>
+        <li>Company expenses in areas like business travel, transport / freight, capital goods and more</li>
+      </ul>
+    </div>
+
+    <a
+      class="n-button n-button--primary"
+      (click)="logClick('ContinueEstimateButtonClick')"
+      [routerLink]="(entry$ | async) ? ['/wizard', (entry$ | async)?._id] : '/wizard'"
+    >
+      Estimate emissions
+      <mat-icon class="icon" svgIcon="n:arrow-right"></mat-icon>
+    </a>
+  </div>
+
+  <n-home-donut class="column" [showImpact]="showImpact$ | async" [impact]="impact$ | async" [entry]="entry$ | async">
+    <h2 class="column__title">
+      <strong>Your scope overview</strong>
+      <span class="column__title-unit">
+        tonnes CO₂e
+        <mat-icon
+          class="column__title-icon"
+          svgIcon="n:question"
+          matTooltip="Metric tonnes of CO2 equivalence, the standard unit for measuring greenhouse gas emissions' global warming impact"
+        >
+        </mat-icon>
+      </span>
+    </h2>
+  </n-home-donut>
+
+  <section class="scopes">
+    <h2 class="scopes__title">What are scopes?</h2>
+    <dl class="scopes__grid">
+      <div class="scopes__scope">
+        <dt><strong>Scope 1</strong></dt>
+        <dd class="scopes__description">
+          Direct emissions from the combustion of fuel in assets that a company operates, such as fuel emissions from
+          company-owned cars, diesel generators, gas boilers and air-conditioning leaks.
+        </dd>
+      </div>
+      <div class="scopes__scope">
+        <dt><strong>Scope 2</strong></dt>
+        <dd class="scopes__description">
+          Indirect emissions from the generation of energy purchased from a utility provider, such as heating, cooling,
+          steam, and electricity.
+        </dd>
+      </div>
+      <div class="scopes__scope">
+        <dt><strong>Scope 3</strong></dt>
+        <dd class="scopes__description">
+          All indirect greenhouse gas emissions that do not fall under scope 2 - upstream and downstream. This
+          calculator includes upstream emissions from purchased goods and services, capital goods, upstream transport
+          and distribution, and business travel, calculated from your expenses.
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <n-home-actions class="tips" [organization]="organization$ | async"></n-home-actions>
+</div>
+<n-home-footer></n-home-footer>

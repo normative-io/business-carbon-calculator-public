@@ -1,0 +1,30 @@
+@use '../../../styles/grid' as grid;
+
+.grid {
+  @include grid.layout($gap: grid.$gap-narrow, $row-gap: 0, $mobile-columns: grid.$columns, $no-gutter: true);
+
+  border: 0;
+  padding: 0;
+}
+
+.label {
+  grid-column: span grid.$columns;
+}
+
+.input {
+  grid-column: span 7;
+}
+
+.dropdown {
+  grid-column: span 5;
+}
+
+@media screen and (min-width: 1220px) {
+  .input {
+    grid-column: span grid.$columns * 0.75;
+  }
+
+  .dropdown {
+    grid-column: span grid.$columns * 0.25;
+  }
+}

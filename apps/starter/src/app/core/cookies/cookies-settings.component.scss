@@ -1,0 +1,28 @@
+@use '../../../styles/typography' as typography;
+
+:host {
+  display: block;
+  max-width: 500px;
+}
+
+.title {
+  @include typography.font(h5);
+
+  margin: 0;
+}
+
+.intro {
+  @include typography.font(body-2);
+
+  margin: 8px 0 24px;
+}
+
+.form {
+  display: grid;
+  grid-gap: 4px;
+}
+
+.save {
+  justify-self: center;
+  margin-top: 24px;
+}

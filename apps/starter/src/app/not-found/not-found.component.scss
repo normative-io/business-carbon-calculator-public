@@ -1,0 +1,39 @@
+@use '../../styles/grid' as grid;
+@use '../../styles/typography' as typography;
+
+:host {
+  @include grid.layout($gap: grid.$gap-narrow);
+
+  grid-template-rows: 2fr 3fr;
+  min-height: 100%;
+  padding-bottom: grid.$gutter;
+  padding-top: grid.$gutter;
+}
+
+.title,
+.text {
+  margin: 0;
+  text-align: center;
+
+  @include grid.breakpoint() {
+    grid-column: span grid.$columns;
+  }
+}
+
+.title {
+  @include typography.font(h4);
+
+  align-self: flex-end;
+}
+
+.text {
+  @include typography.font(intro);
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  margin-top: 3em;
+}

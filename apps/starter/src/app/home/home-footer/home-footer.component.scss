@@ -1,0 +1,70 @@
+@use '../../../styles/grid' as grid;
+@use '../../../styles/typography' as typography;
+
+.footer {
+  background: #f1f1f4;
+  color: #606062;
+  padding: 28px 0;
+}
+
+.inner {
+  @include grid.layout($mobile-columns: grid.$columns, $mobile-gap: grid.$gap-narrow);
+  @include typography.font(body-1);
+
+  text-align: center;
+}
+
+.copyright {
+  grid-column: span grid.$columns;
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  grid-column: span grid.$columns;
+  list-style: none;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  appearance: none;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: none;
+  transition: color 0.1s ease-in-out;
+
+  &:hover,
+  &:focus {
+    color: #000;
+  }
+}
+
+@media (min-width: 700px) {
+  .links {
+    flex-direction: row;
+    gap: 32px;
+  }
+}
+
+@media (min-width: 920px) {
+  .inner {
+    text-align: initial;
+  }
+
+  .copyright {
+    grid-column: span 4;
+  }
+
+  .links {
+    grid-column: span 8;
+    justify-content: flex-end;
+  }
+}

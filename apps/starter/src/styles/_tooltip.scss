@@ -1,0 +1,13 @@
+@use 'colors' as colors;
+@use 'typography' as typography;
+
+mat-tooltip-component .mat-tooltip {
+  @include typography.font(body-1);
+
+  background: colors.get-primary-color();
+  border-radius: 0;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.25);
+  color: colors.get-primary-contrast-color();
+  margin: 8px;
+  padding: 8px;
+}

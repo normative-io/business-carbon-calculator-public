@@ -1,0 +1,51 @@
+@use 'typography' as typography;
+
+mat-accordion.mat-accordion mat-expansion-panel.mat-expansion-panel {
+  border-bottom: 1px solid #000;
+
+  &:first-of-type,
+  &:last-of-type {
+    border-radius: 0;
+  }
+
+  &:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+  }
+
+  .mat-expansion-panel-header {
+    @include typography.font(h6, $font-weight: typography.$regular);
+
+    height: 74px;
+    padding-left: 0;
+  }
+
+  .mat-expansion-panel-header-title {
+    white-space: nowrap;
+  }
+
+  .mat-expansion-panel-header-description {
+    display: block;
+    flex-grow: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mat-expansion-indicator::after {
+    color: currentColor;
+    margin-top: -0.4em;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0 0 64px;
+  }
+
+  &.mat-expanded {
+    border-radius: 0;
+    margin: 0;
+
+    .mat-expansion-panel-header-title {
+      font-weight: typography.$demibold;
+    }
+  }
+}

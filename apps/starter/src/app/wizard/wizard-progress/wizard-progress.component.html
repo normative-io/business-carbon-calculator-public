@@ -1,0 +1,13 @@
+<div
+  [attr.aria-valuemax]="max"
+  [attr.aria-valuemin]="min"
+  [attr.aria-valuenow]="current"
+  [attr.aria-valuetext]="label || getPercentage()"
+  class="container"
+  role="progressbar"
+>
+  <!-- Projected content provides the visible label above the progress bar. -->
+  <ng-content></ng-content>
+
+  <span aria-hidden="true" class="bar" [style.width]="getPercentage()"></span>
+</div>

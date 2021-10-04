@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '@normative/theme' as theme;
+
+$config: mat.get-color-config(theme.$theme);
+$primary: map-get($config, primary);
+$brand: map-get($config, accent);
+
+@function get-primary-color($hue: default) {
+  @return mat.get-color-from-palette($primary, $hue);
+}
+
+@function get-primary-contrast-color($hue: default) {
+  @return get-contrast-color($primary, $hue);
+}
+
+@function get-brand-color($hue: default) {
+  @return mat.get-color-from-palette($brand, $hue);
+}
+
+@function get-brand-contrast-color($hue: default) {
+  @return get-contrast-color($brand, $hue);
+}
+
+@function get-contrast-color($palette, $hue: default) {
+  $contrast: mat.get-color-from-palette($palette, $hue + '-contrast');
+  @return $contrast or #000;
+}

@@ -1,0 +1,19 @@
+<p *ngIf="eyebrow" class="eyebrow" [class.eyebrow--small]="variant === 'small'">
+  {{ eyebrow }}
+</p>
+
+<label
+  *ngIf="field.label && !isLegend(field)"
+  class="label"
+  [class.label--small]="variant === 'small'"
+  [for]="field.path"
+>
+  {{ field.label }}
+</label>
+<legend *ngIf="field.label && isLegend(field)" class="label" [class.label--small]="variant === 'small'">
+  {{ field.label }}
+</legend>
+
+<p *ngIf="field.tip" class="tip" [class.tip--small]="variant === 'small'">
+  {{ field.tip }}
+</p>

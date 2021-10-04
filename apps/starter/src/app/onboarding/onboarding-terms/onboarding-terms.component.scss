@@ -1,0 +1,16 @@
+@use '../../../styles/typography' as typography;
+
+h2 {
+  @include typography.font(h6);
+
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+p {
+  @include typography.font(body-1);
+
+  a {
+    color: inherit;
+  }
+}

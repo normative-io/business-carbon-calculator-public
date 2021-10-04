@@ -1,0 +1,72 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/grid' as grid;
+@use '../../../styles/typography' as typography;
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.coverage {
+  position: sticky;
+  top: 0;
+
+  &__rating {
+    align-items: center;
+    display: flex;
+  }
+
+  &__icon {
+    color: colors.get-primary-color(300);
+    cursor: pointer;
+    font-size: 16px;
+    margin-inline-start: 4px;
+    transform: rotate(180deg); // is currently upside down
+  }
+
+  &__declared {
+    @include typography.font-settings($numeric: true);
+
+    font-weight: typography.$regular;
+  }
+}
+
+.accordion {
+  // 9px from progress bar adjustment
+  margin-top: (80px - grid.$gutter + 9px) + grid.$gap-narrow;
+
+  .coverage + & {
+    margin-top: grid.$gap-narrow;
+  }
+}
+
+.subtotal {
+  @include typography.font-settings($numeric: true);
+
+  &--filled {
+    color: #000;
+  }
+}
+
+.inputs {
+  display: grid;
+  grid-gap: grid.$gap-narrow;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.input + .input {
+  margin-top: 32px;
+}
+
+.total {
+  @include typography.font(h5, $numeric: true);
+
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: auto 1fr;
+  margin-bottom: auto;
+  padding-right: 24px;
+  text-align: end;
+}

@@ -1,0 +1,46 @@
+<footer class="footer">
+  <div class="inner">
+    <p class="copyright">Copyright © Normative {{ year }}</p>
+
+    <ul class="links">
+      <li>
+        <a
+          class="link link--privacy"
+          href="https://normative.io/bcc-privacy-policy"
+          target="_blank"
+          (click)="logClick('PrivacyPolicyFooterClick')"
+          >Privacy policy</a
+        >
+      </li>
+      <li><button class="link link--cookies" (click)="onCookiesClick()">Cookie settings</button></li>
+
+      <li>
+        <a
+          class="link link--contact"
+          href="https://help.normative.io/hc/en-us/articles/4423270961297"
+          target="_blank"
+          (click)="logClick('MethodologyFromFooterClick')"
+          >Methodology</a
+        >
+      </li>
+      <li>
+        <a
+          class="link link--contact"
+          href="https://normative.io/contact-us"
+          target="_blank"
+          (click)="logClick('ContactUsFooterClick')"
+          >Contact Us</a
+        >
+      </li>
+      <li>
+        <a
+          class="link link--normative"
+          href="https://normative.io"
+          target="_blank"
+          (click)="logClick('NormativeFromFooterClick')"
+          >Normative.io</a
+        >
+      </li>
+    </ul>
+  </div>
+</footer>

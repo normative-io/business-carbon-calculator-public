@@ -1,0 +1,37 @@
+@use '../../../styles/typography' as typography;
+
+.eyebrow {
+  @include typography.font(intro);
+
+  margin: 0 0 8px;
+}
+
+.label {
+  @include typography.font(h4);
+
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  &--small {
+    @include typography.font(h6);
+  }
+}
+
+.tip {
+  @include typography.font(subtitle-1, $font-weight: typography.$regular);
+
+  margin: 14px 0 0;
+}
+
+.eyebrow,
+.label,
+.tip {
+  &:last-child {
+    margin-bottom: 32px;
+  }
+
+  &--small:last-child {
+    margin-bottom: 16px;
+  }
+}

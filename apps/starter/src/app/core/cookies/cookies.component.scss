@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+@use '../../../styles/typography' as typography;
+
+.container {
+  @include mat.elevation(3);
+
+  background: #fff;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 16px;
+  max-width: 375px;
+  padding: 24px;
+  right: 16px;
+  z-index: 100;
+}
+
+.terms {
+  @include typography.font(body-2);
+
+  margin: 0 0 1.5em;
+
+  a {
+    color: #000;
+    font-weight: bold;
+  }
+}
+
+.accept {
+  margin-bottom: 6px;
+}

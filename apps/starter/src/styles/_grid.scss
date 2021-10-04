@@ -1,0 +1,45 @@
+$breakpoint: 1024px;
+$columns: 12;
+$max-width: 1400px;
+
+$gap: 48px;
+$gap-narrow: 16px;
+
+$gutter: 32px;
+$mobile-gutter: 20px;
+
+@mixin layout(
+  $columns: $columns,
+  // Grid gap
+  $gap: $gap,
+  $row-gap: $gap,
+  // Mobile over-rides
+  $mobile-columns: 1,
+  $mobile-gap: $gap,
+  $mobile-row-gap: $mobile-gap,
+  // Gutter (not required for nested grids)
+  $no-gutter: false
+) {
+  display: grid;
+  grid-gap: $mobile-row-gap $mobile-gap;
+  grid-template-columns: repeat($mobile-columns, 1fr);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $max-width;
+  padding-left: if($no-gutter, null, $mobile-gutter);
+  padding-right: if($no-gutter, null, $mobile-gutter);
+  width: 100%;
+
+  @include breakpoint {
+    grid-gap: $row-gap $gap;
+    grid-template-columns: repeat($columns, 1fr);
+    padding-left: if($no-gutter, null, $gutter);
+    padding-right: if($no-gutter, null, $gutter);
+  }
+}
+
+@mixin breakpoint() {
+  @media screen and (min-width: $breakpoint) {
+    @content;
+  }
+}

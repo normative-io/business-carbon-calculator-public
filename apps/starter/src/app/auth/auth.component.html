@@ -1,0 +1,8 @@
+<pre *ngIf="auth.error$ | async as error">
+  {{ error | json }}
+</pre>
+
+<ng-container *ngIf="path$ | async as path">
+  <button *ngIf="path === 'login'" (click)="onLoginClick()">Login</button>
+  <button *ngIf="path === 'logout'" (click)="onLogoutClick()">Logout</button>
+</ng-container>

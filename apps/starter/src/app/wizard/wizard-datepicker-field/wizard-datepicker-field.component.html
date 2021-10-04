@@ -1,0 +1,48 @@
+<fieldset class="container" [formGroup]="dateFormGroup">
+  <n-wizard-label *ngIf="field.label" [field]="field"></n-wizard-label>
+
+  <div class="datepickers">
+    <mat-form-field appearance="fill" class="datepickers__input">
+      <input
+        aria-label="From"
+        formControlName="startDate"
+        matInput
+        [max]="maxStartDate"
+        [matDatepicker]="pickerStart"
+        placeholder="From"
+        (focusout)="saveOnFocusOut.emit()"
+      />
+      <mat-datepicker-toggle matSuffix [for]="pickerStart">
+        <mat-icon matDatepickerToggleIcon svgIcon="n:calendar"></mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+      <mat-error *ngIf="startDate?.invalid" class="error">Select a valid start date to continue</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="datepickers__input">
+      <input aria-label="To" formControlName="endDate" matInput [matDatepicker]="pickerEnd" placeholder="To" />
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd">
+        <mat-icon matDatepickerToggleIcon svgIcon="n:calendar"></mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+      <mat-error *ngIf="endDate?.invalid" class="error">Select an end date to continue</mat-error>
+    </mat-form-field>
+  </div>
+
+  <button
+    class="n-button n-button--primary n-button--outlined preset"
+    (click)="setYearRange('financial')"
+    data-preset="fiscal"
+    type="button"
+  >
+    Last financial year
+  </button>
+  <button
+    class="n-button n-button--primary n-button--outlined preset"
+    (click)="setYearRange('calendar')"
+    data-preset="year"
+    type="button"
+  >
+    Last calendar year
+  </button>
+</fieldset>

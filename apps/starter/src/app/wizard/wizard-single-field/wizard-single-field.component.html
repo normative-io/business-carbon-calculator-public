@@ -1,0 +1,27 @@
+<div class="container">
+  <n-wizard-label
+    *ngIf="field.label"
+    class="label"
+    [eyebrow]="eyebrow"
+    [field]="field"
+    [variant]="variant"
+  ></n-wizard-label>
+
+  <mat-form-field appearance="fill" class="input">
+    <input
+      class="input__native"
+      matInput
+      [nInputFormat]="field.type"
+      [formControl]="$any(form.get(field.path))"
+      [id]="field.path"
+      [placeholder]="field.placeholder ?? ''"
+      type="tel"
+      (focusout)="saveOnFocusOut.emit()"
+    />
+
+    <span *ngIf="field.suffix" matSuffix>{{ field.suffix }}</span>
+    <mat-error *ngIf="field.type === 'number' && form.get(field.path)?.invalid" class="error">
+      Please enter a valid number
+    </mat-error>
+  </mat-form-field>
+</div>

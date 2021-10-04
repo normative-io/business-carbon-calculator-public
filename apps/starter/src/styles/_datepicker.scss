@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '@normative/theme' as theme;
+
+$color: mat.get-color-config(theme.$theme);
+$primary: map-get($color, primary);
+
+$typography: mat.get-typography-config(theme.$theme);
+
+mat-datepicker-toggle.mat-datepicker-toggle {
+  color: mat.get-color-from-palette($primary);
+  margin-left: 0.5em;
+  margin-right: -0.5em;
+
+  .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix & {
+    .mat-icon-button {
+      border-radius: 100%;
+      height: 2em;
+      width: 2em;
+    }
+  }
+}

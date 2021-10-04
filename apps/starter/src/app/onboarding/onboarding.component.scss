@@ -1,0 +1,193 @@
+@use '../../styles/typography' as typography;
+
+:host {
+  align-items: center;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas: 'header' 'form';
+  grid-template-rows: 48px 1fr;
+  min-height: 100%;
+  width: 100%;
+}
+
+.header {
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 12px;
+  background-color: #fff;
+
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas: 'previous progress empty';
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 48px;
+}
+
+.previous {
+  grid-area: previous;
+
+  .icon {
+    margin: 0 8px 0 0;
+    transform: rotate(180deg);
+  }
+}
+
+.progress {
+  @include typography.font(subtitle-1);
+
+  color: rgba(163, 164, 169, 1);
+  grid-area: progress;
+
+  &__step {
+    display: none;
+
+    @include typography.breakpoint() {
+      display: inline;
+    }
+  }
+}
+
+.form {
+  align-self: stretch;
+  grid-area: form;
+  text-align: center;
+  height: 100%;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.body {
+  display: grid;
+  grid-template-rows: 1fr auto 2fr;
+  margin: auto;
+  max-width: 700px;
+  min-height: 100%;
+  padding: 20px;
+
+  &__inner {
+    grid-row: 2;
+    overflow: hidden;
+    width: 100%;
+  }
+}
+
+.title {
+  @include typography.font(h3);
+
+  margin: 32px 0 16px;
+
+  @include typography.breakpoint() {
+    margin-top: 64px;
+  }
+
+  ::ng-deep strong {
+    color: var(--color-accent);
+    font-weight: inherit;
+  }
+}
+
+.subtitle {
+  @include typography.font(body-1);
+
+  margin: 16px 0;
+}
+
+.input,
+.continue {
+  margin: 0 auto;
+  max-width: 546px;
+  width: 100%;
+}
+
+.input {
+  margin-top: 48px;
+}
+
+.continue {
+  margin-top: 32px;
+}
+
+.spinner-container {
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.terms {
+  @include typography.font(body-1);
+
+  padding: 0 24px;
+  border: 1px solid #e6e6e9;
+  text-align: left;
+}
+
+.n-checkbox {
+  @include typography.font(h6);
+
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin: 32px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.n-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: solid 2px #000;
+}
+
+.n-checkbox:hover input:not(:checked) ~ .checkmark:after {
+  display: block;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid #aaa 2px;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.n-checkbox input:not(:checked) ~ .checkmark {
+  background-color: #fff;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.n-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.n-checkbox .checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid black 2px;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

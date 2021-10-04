@@ -1,0 +1,169 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/typography' as typography;
+
+:host {
+  --background-color: #fff;
+  --highlight-color: #ff9178;
+  --scope-1-color: #cccccc;
+  --scope-2-color: #808080;
+  --scope-3-color: #000000;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(197, 197, 197, 1);
+  margin-bottom: 8px;
+  padding-bottom: 11px;
+
+  &__label {
+    font-weight: bold;
+  }
+}
+
+.prompt {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 5%;
+  text-align: center;
+
+  p {
+    @include typography.font(h6, $font-weight: typography.$demibold);
+
+    margin: 0;
+  }
+
+  &__icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+  }
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.body {
+  align-items: center;
+  display: grid;
+  grid-gap: 24px;
+  margin: 16px auto 0;
+  max-width: 650px;
+
+  @media screen and (min-width: 620px) {
+    grid-template-columns: minmax(0, 304px) auto;
+  }
+
+  &--placeholder {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+
+    .chart {
+      position: relative;
+    }
+  }
+}
+
+.tooltip {
+  @include typography.font(body-1, $numeric: true);
+
+  position: absolute;
+  height: 36px;
+  padding: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07);
+  display: block;
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.chart {
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+  justify-self: center;
+  max-width: 304px;
+  width: 100%;
+
+  #donut,
+  ::ng-deep svg {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.legend {
+  &__color {
+    display: block;
+    height: 14px;
+    width: 14px;
+  }
+
+  &__total {
+    @include typography.font(h4, $numeric: true);
+
+    grid-column: span 2;
+    overflow-wrap: break-word;
+  }
+
+  &--hidden {
+    display: none;
+  }
+
+  .scope:not(:last-child) {
+    border-bottom: 1px solid #c5c5c5;
+  }
+}
+
+.scope {
+  @include typography.font(body-1);
+
+  align-items: center;
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: auto 1fr;
+  padding: 8px 0;
+
+  .light {
+    background-color: var(--scope-1-color);
+  }
+
+  .medium {
+    background-color: var(--scope-2-color);
+  }
+
+  .dark {
+    background-color: var(--scope-3-color);
+  }
+
+  .highlight {
+    background-color: var(--highlight-color);
+  }
+}
+
+.icon {
+  font-size: 16px;
+  align-self: center;
+
+  &--info {
+    color: colors.get-primary-color(300);
+    transform: rotate(180deg); // info icon is currently upside down
+  }
+
+  &--positive {
+    color: green;
+  }
+
+  &--negative {
+    color: #fd3a3a;
+  }
+}

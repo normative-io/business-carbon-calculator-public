@@ -1,0 +1,21 @@
+@use '../../styles/grid' as grid;
+@use '../../styles/typography' as typography;
+
+:host {
+  @include grid.layout($columns: 1);
+
+  padding-bottom: grid.$gap;
+  padding-top: grid.$gap;
+}
+
+h1 {
+  @include typography.font(h4);
+
+  margin: 0;
+}
+
+pre {
+  font-size: 1.4em;
+  margin: 0;
+  white-space: pre-wrap;
+}

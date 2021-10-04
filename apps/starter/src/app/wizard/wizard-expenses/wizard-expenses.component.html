@@ -1,0 +1,54 @@
+<n-wizard-progress
+  *ngIf="coverage$ | async as coverage"
+  class="coverage"
+  [current]="coverage.total?.total || 0"
+  [max]="coverage.declared?.total || 100"
+  [min]="0"
+>
+  <span class="coverage__rating">
+    Expense coverage: {{ coverage.status }}
+    <mat-icon class="coverage__icon" [matTooltip]="coverage.tooltip" svgIcon="n:info"></mat-icon>
+  </span>
+  <span *ngIf="coverage.declared" class="coverage__declared">{{ formatAmount(coverage.declared) }}</span>
+</n-wizard-progress>
+
+<mat-accordion *ngIf="totals$ | async as totals" class="accordion">
+  <mat-expansion-panel *ngFor="let category of categories; let index = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ category.name }}</mat-panel-title>
+      <mat-panel-description>
+        <span
+          *ngFor="let amount of totals[index]; let last = last"
+          class="subtotal"
+          [class.subtotal--filled]="amount.total > 0"
+        >
+          {{ formatAmount(amount) }}
+          <ng-container *ngIf="!last">+</ng-container>
+        </span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <ng-template matExpansionPanelContent>
+      <fieldset class="inputs">
+        <n-wizard-unit-field
+          *ngFor="let subcategory of category.subcategories"
+          class="input"
+          [field]="getUnitField(subcategory)"
+          [form]="form"
+          variant="small"
+          (saveOnFocusOut)="saveOnFocusOut.emit()"
+        ></n-wizard-unit-field>
+      </fieldset>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<p *ngIf="total$ | async as total" class="total">
+  Total expenses:
+  <span>
+    <ng-container *ngFor="let amount of total; let last = last">
+      {{ formatAmount(amount) }}
+      <ng-container *ngIf="!last">+</ng-container>
+    </ng-container>
+  </span>
+</p>

@@ -1,0 +1,28 @@
+<fieldset class="grid">
+  <n-wizard-label
+    *ngIf="field.label"
+    class="label"
+    [eyebrow]="eyebrow"
+    [field]="getLabelField(field)"
+    [variant]="variant"
+  ></n-wizard-label>
+
+  <n-wizard-single-field
+    class="input"
+    [class.input--small]="variant === 'small'"
+    [field]="getSingleField(field)"
+    [form]="form"
+    [variant]="variant"
+    (saveOnFocusOut)="saveOnFocusOut.emit()"
+  ></n-wizard-single-field>
+
+  <mat-form-field appearance="fill" class="dropdown">
+    <mat-select [formControl]="getUnitFormControl(field)">
+      <mat-select-trigger>{{ getUnitDisplayValue(field) }}</mat-select-trigger>
+      <mat-option *ngFor="let unit of getUnits(field)" [value]="unit.value">
+        {{ unit.name }} <span *ngIf="unit.shortName">({{ unit.shortName }})</span>
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+  </mat-form-field>
+</fieldset>

@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+@use '@normative/theme' as theme;
+@use '@normative/theme/colors' as colors;
+
+@import 'styles/button';
+@import 'styles/container';
+
+// Material
+@include theme.core();
+@include theme.all-component-themes();
+
+@import 'styles/checkbox';
+@import 'styles/datepicker';
+@import 'styles/dialog';
+@import 'styles/expansion';
+@import 'styles/form-field';
+@import 'styles/icon';
+@import 'styles/menu';
+@import 'styles/select';
+@import 'styles/tooltip';
+
+// Native
+:root {
+  --color-background: #{mat.get-color-from-palette(colors.$black, 'default-contrast')};
+  --color-primary: #{mat.get-color-from-palette(colors.$black)};
+  --color-accent: #{mat.get-color-from-palette(colors.$coral)};
+  --color-inverted-background: var(--color-primary);
+  --color-inverted-primary: var(--color-background);
+  --color-inverted-accent: var(--color-accent);
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}

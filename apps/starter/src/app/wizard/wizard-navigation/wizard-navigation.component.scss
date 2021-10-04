@@ -1,0 +1,90 @@
+@use '../../../styles/grid' as grid;
+@use '../../../styles/typography' as typography;
+
+:host {
+  align-self: flex-end;
+  box-shadow: 0px 0 16px 16px var(--color-background);
+  bottom: 0;
+  position: sticky;
+  margin-top: grid.$mobile-gutter;
+  width: 100%;
+
+  @include grid.breakpoint() {
+    margin-top: grid.$gutter;
+  }
+
+  // Hack to hide scrolling content appear below navigation
+  &:after {
+    background: var(--color-background);
+    content: ' ';
+    height: grid.$mobile-gutter;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+
+    @include grid.breakpoint() {
+      height: grid.$gutter;
+    }
+  }
+}
+
+.warning {
+  background: #ff9178;
+  margin: 0 (grid.$mobile-gutter * -1);
+  overflow: hidden;
+  width: calc(100% + (grid.$mobile-gutter * 2));
+
+  @include grid.breakpoint() {
+    margin: 0 (grid.$gutter * -1);
+    width: calc(100% + (grid.$gutter * 2));
+  }
+
+  &__inner {
+    display: grid;
+    grid-gap: grid.$gap-narrow;
+    grid-template-columns: 22px auto;
+    padding: 24px;
+  }
+
+  &__icon {
+    font-size: 22px;
+  }
+
+  &__message {
+    @include typography.font(body-1);
+
+    grid-column: 2;
+    margin: 0;
+  }
+
+  &__demo {
+    align-items: center;
+    color: inherit;
+    display: inline-flex;
+    font-weight: typography.$demibold;
+    text-decoration: none;
+
+    mat-icon {
+      font-size: 1em;
+      margin-left: 0.5em;
+    }
+  }
+}
+
+.buttons {
+  background: var(--color-background);
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+  padding-top: grid.$mobile-gutter;
+
+  @include grid.breakpoint() {
+    padding-top: grid.$gutter;
+  }
+
+  button:last-child {
+    margin-inline-end: auto;
+  }
+}

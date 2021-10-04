@@ -1,0 +1,40 @@
+@use '../../../styles/typography' as typography;
+
+:host {
+  overflow: hidden;
+}
+
+.headline {
+  @include typography.font(h1, $numeric: true);
+
+  margin: 8px 0 36px;
+  overflow-wrap: break-word;
+}
+
+.accuracy {
+  @include typography.font(body-1);
+
+  background-color: #edef8b;
+  max-width: 650px;
+  padding: 16px 24px 16px 16px;
+  width: 100%;
+
+  p {
+    margin: 0;
+
+    + p {
+      margin-top: 10px;
+    }
+  }
+
+  a {
+    color: inherit;
+    font-weight: typography.$demibold;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}

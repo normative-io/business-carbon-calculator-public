@@ -1,0 +1,43 @@
+<mat-dialog-content>
+  <form class="form" [formGroup]="form" (submit)="save()">
+    <h1 class="title">Settings</h1>
+
+    <mat-form-field appearance="outline" class="input" [hideRequiredMarker]="true">
+      <mat-label>Industry</mat-label>
+      <mat-icon matPrefix svgIcon="n:capital"></mat-icon>
+      <mat-select formControlName="sector">
+        <mat-option *ngFor="let sector of sectorList$ | async" [value]="sector">{{ sector.name }}</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input" [hideRequiredMarker]="true">
+      <mat-label>Country</mat-label>
+      <mat-icon matPrefix svgIcon="n:position"></mat-icon>
+      <mat-select formControlName="country">
+        <mat-option *ngFor="let country of countryList$ | async" [value]="country">{{ country.name }}</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+
+    <button class="n-button n-button--primary save">Save</button>
+  </form>
+
+  <div class="data">
+    <h2 class="data__title">Data management</h2>
+    <p class="data__text">
+      If you wish to delete your account and all associated financial and personal data, please contact us via the
+      button below or by emailing us at bcc-data-management@normative.io. Note that once your request has been
+      processed, you will not be able to access your emissions estimates or any other data you have provided.
+    </p>
+    <p class="data__text">
+      <a class="data__button" (click)="logRequestDataDeletion()" [href]="requestDataDelectionUrl" target="_blank">
+        Request data deletion
+      </a>
+    </p>
+  </div>
+
+  <button aria-label="Exit" class="close" (click)="close()" mat-icon-button>
+    <mat-icon class="close__icon" svgIcon="n:plus"></mat-icon>
+  </button>
+</mat-dialog-content>

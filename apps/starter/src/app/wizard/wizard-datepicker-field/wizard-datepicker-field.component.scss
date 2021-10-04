@@ -1,0 +1,34 @@
+@use '../../../styles/grid' as grid;
+
+$stack-below: 600px;
+
+.container {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.datepickers {
+  @include grid.layout($gap: grid.$gap-narrow, $mobile-columns: grid.$columns, $no-gutter: true);
+
+  &__input {
+    grid-column: span grid.$columns;
+
+    @media screen and (min-width: $stack-below) and (max-width: grid.$breakpoint) {
+      grid-column: span grid.$columns * 0.5;
+    }
+
+    @media screen and (min-width: #{grid.$breakpoint + (600px - (grid.$breakpoint * 0.5))}) {
+      grid-column: span grid.$columns * 0.5;
+    }
+  }
+}
+
+.preset {
+  margin: 24px grid.$gap-narrow 0 0;
+}
+
+.error {
+  position: relative;
+  top: 20px;
+}

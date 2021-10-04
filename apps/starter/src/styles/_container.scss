@@ -1,0 +1,16 @@
+@use 'colors' as colors;
+
+.n-container {
+  --color-accent: #{colors.get-brand-color(500)};
+  --color-background: #{colors.get-primary-color(50)};
+  --color-primary: #{colors.get-primary-contrast-color(50)};
+
+  background: var(--color-background);
+  color: var(--color-primary);
+
+  &--inverted {
+    --color-accent: #{colors.get-brand-color()};
+    --color-background: #{colors.get-primary-color()};
+    --color-primary: #{colors.get-primary-contrast-color()};
+  }
+}

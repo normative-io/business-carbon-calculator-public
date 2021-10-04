@@ -1,0 +1,10 @@
+<div *ngIf="show$ | async" aria-labelledby="cookies-terms" class="container" role="region" [@slide]>
+  <p class="terms" id="cookies-terms">
+    By accepting, you agree to store cookies on your device for performance improvements, usage analysis, and marketing
+    purposes
+    <a href="https://normative.io/bcc-cookie-policy">Learn More</a>
+  </p>
+
+  <button class="n-button n-button--primary accept" (click)="accept()">Accept</button>
+  <button class="n-button n-button--primary n-button--outlined configure" (click)="configure()">Cookie settings</button>
+</div>

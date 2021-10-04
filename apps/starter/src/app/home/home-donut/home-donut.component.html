@@ -1,0 +1,39 @@
+<ng-content></ng-content>
+
+<div class="body" [class.body--placeholder]="!showImpact">
+  <div class="chart">
+    <div id="donut"></div>
+    <div id="tooltip" class="tooltip" [class.tooltip--hidden]="!showImpact || !showTooltip">
+      {{ hoverCategory }} : {{ hoverValue | tonnes }}
+    </div>
+    <div class="prompt" [class.prompt--hidden]="showImpact">
+      <mat-icon class="prompt__icon" svgIcon="n:reports"></mat-icon>
+      <p>Once you have made an estimate, it will appear here</p>
+    </div>
+  </div>
+  <div class="legend" [class.legend--hidden]="!showImpact">
+    <div class="scope">
+      <div id="scope-1" class="legend__color light"></div>
+      <span>Scope 1 - Direct emissions</span>
+      <div id="scope-total-1" class="legend__total">{{ scopeTotals[0] | tonnes }}</div>
+    </div>
+    <div class="scope">
+      <div id="scope-2" class="legend__color medium"></div>
+      <span>Scope 2 - Indirect emissions</span>
+      <div id="scope-total-2" class="legend__total">{{ scopeTotals[1] | tonnes }}</div>
+    </div>
+    <div class="scope">
+      <div id="scope-3" class="legend__color dark"></div>
+      <span>Scope 3 - Supply chain emissions</span>
+      <div id="scope-total-3" class="legend__total">{{ scopeTotals[2] | tonnes }}</div>
+    </div>
+
+    <div *ngIf="coverage && getCoverageTooltip(coverage) as tooltip" class="scope coverage">
+      <span>Expense coverage (scope 3)</span>
+      <div class="legend__total">
+        <span class="coverage__status">{{ getCoverageStatusWording(coverage) }}</span>
+        <mat-icon [class]="tooltip.className" [svgIcon]="tooltip.icon" [matTooltip]="tooltip.text"></mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

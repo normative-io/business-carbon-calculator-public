@@ -1,0 +1,60 @@
+@use '../../../styles/grid' as grid;
+@use '../../../styles/typography' as typography;
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  &__icon {
+    transform: rotate(45deg);
+  }
+}
+
+.title {
+  @include typography.font(h4);
+
+  margin: 22px 0 32px;
+  text-align: center;
+}
+
+.input + .input {
+  margin-top: 16px;
+}
+
+.save {
+  margin-top: 32px;
+  width: 100%;
+}
+
+.data {
+  padding-top: grid.$gutter;
+
+  &__title {
+    @include typography.font(h5);
+
+    margin: 0 0 8px;
+  }
+
+  &__text {
+    @include typography.font(body-1);
+
+    margin: 0;
+
+    + .data__text {
+      margin-top: 1.5em;
+    }
+  }
+
+  &__button {
+    @include typography.font(button);
+
+    color: inherit;
+    text-decoration: none;
+  }
+}

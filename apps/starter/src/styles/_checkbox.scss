@@ -1,0 +1,5 @@
+@use 'typography' as typography;
+
+mat-checkbox.mat-checkbox {
+  @include typography.font(body-1);
+}

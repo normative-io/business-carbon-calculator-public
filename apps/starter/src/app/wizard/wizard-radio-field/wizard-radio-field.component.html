@@ -1,0 +1,21 @@
+<fieldset class="group">
+  <n-wizard-label *ngIf="field.label" [eyebrow]="eyebrow" [field]="field"></n-wizard-label>
+
+  <div *ngFor="let option of field.options" class="n-radio">
+    <input
+      class="n-radio__input"
+      type="radio"
+      [name]="field.path"
+      [value]="option.value"
+      [formControl]="$any(form.get(field.path))"
+      [id]="option.value"
+    />
+    <label class="n-radio__label" [for]="option.value">
+      {{ option.label }}
+      <span *ngIf="option.value === null" class="share-prompt">
+        Share question with someone who would know
+        <mat-icon class="share-icon">ios_share</mat-icon>
+      </span>
+    </label>
+  </div>
+</fieldset>
