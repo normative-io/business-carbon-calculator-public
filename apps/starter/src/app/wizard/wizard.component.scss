@@ -1,0 +1,332 @@
+// Copyright 2022 Meta Mind AB
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@use 'sass:math';
+@use '../../styles/colors' as colors;
+@use '../../styles/grid' as grid;
+@use '../../styles/typography' as typography;
+
+// Shared
+
+$top-bar-height: 80px - grid.$gutter;
+
+// Component
+
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @include grid.breakpoint() {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+}
+
+.context,
+.input {
+  height: 100%;
+  overflow: auto;
+  padding: grid.$mobile-gutter;
+
+  @include grid.breakpoint() {
+    padding: grid.$gutter;
+  }
+}
+
+// Toolbar (mobile)
+
+.toolbar {
+  align-items: center;
+  background: colors.get-primary-color();
+  box-shadow: 0px 0 16px 16px colors.get-primary-contrast-color();
+  color: colors.get-primary-contrast-color();
+  display: flex;
+  flex-shrink: 0;
+  height: 56px;
+  padding: 8px grid.$mobile-gutter;
+  position: relative;
+  z-index: 2;
+
+  @include grid.breakpoint() {
+    display: none;
+  }
+
+  &__logo {
+    color: inherit;
+    display: block;
+    font-size: 24px;
+    height: 1em;
+    width: 1em;
+  }
+
+  &__icon {
+    font-size: inherit;
+  }
+}
+
+// Context
+
+.context {
+  display: flex;
+  flex-direction: column;
+  gap: grid.$gap-narrow;
+}
+
+.trilogy {
+  @include grid.layout($gap: grid.$gap-narrow, $mobile-columns: grid.$columns, $no-gutter: true);
+
+  --active: #fff;
+  --inactive: #c5c5c5;
+
+  border-bottom: 1px solid var(--inactive);
+  flex-shrink: 0;
+  height: $top-bar-height;
+
+  &__item {
+    @include typography.font(intro, $mobile-variant: body-2);
+
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--inactive);
+    color: var(--inactive);
+    cursor: pointer;
+    grid-column: span math.div(grid.$columns, 3);
+    margin-bottom: -1px;
+    outline: 0;
+    padding: 0;
+    position: relative;
+    transition: border 0.1s ease-in-out, color 0.1s ease-in-out;
+    text-align: start;
+
+    &:focus,
+    &:hover {
+      color: var(--active);
+    }
+
+    &[aria-current] {
+      color: var(--active);
+      border-bottom: 1px solid var(--active);
+      font-weight: typography.$medium;
+    }
+  }
+
+  .context--splash & {
+    --active: #000;
+    --inactive: #b6b6b9;
+  }
+}
+
+.context {
+  .header {
+    margin-top: 8px;
+
+    ::ng-deep strong {
+      color: var(--color-accent);
+      font-weight: inherit;
+    }
+
+    &__eyebrow {
+      @include typography.font(intro);
+
+      margin: 8px 0 0;
+    }
+
+    &__title {
+      @include typography.font(h2);
+
+      display: flex;
+      margin: 8px 0 0;
+    }
+
+    .title-icon {
+      height: 1.25em;
+      font-size: 0.8em;
+      line-height: 1.25em;
+      margin-right: 0.5em;
+    }
+  }
+
+  &__description {
+    @include typography.font(h4, $font-weight: typography.$regular);
+
+    margin: 0;
+  }
+}
+
+.explanation {
+  margin-top: auto;
+  padding-top: grid.$gutter;
+
+  &__title {
+    @include typography.font(h5);
+
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: auto 1fr;
+    margin: 0 0 4px;
+  }
+
+  &__icon {
+    height: 1em;
+    width: 1em;
+  }
+
+  &__body {
+    @include typography.font(intro);
+
+    margin: 0;
+  }
+}
+
+// Input
+
+.input {
+  @include grid.layout($columns: 1, $gap: grid.$gap-narrow, $mobile-gap: grid.$gap, $no-gutter: true);
+
+  // 9px from progress bar adjustment
+  grid-template-rows: ($top-bar-height + 9px) 1fr auto;
+
+  &--expenses {
+    grid-template-rows: 1fr auto;
+  }
+
+  &__navigation {
+    grid-row: 3;
+  }
+}
+
+.progress {
+  &__title {
+    @include typography.font(h6, $font-weight: typography.$regular);
+
+    align-items: center;
+    display: flex;
+    margin: 0;
+  }
+
+  &__icon {
+    font-size: 0.8em;
+    margin-inline-start: 0.5em;
+  }
+}
+
+.fields {
+  align-items: flex-start;
+  border: 0;
+  display: flex;
+  grid-row: 2;
+  height: 100%;
+  padding: 0;
+  position: relative;
+
+  @include grid.breakpoint() {
+    align-items: center;
+  }
+
+  &__inner {
+    display: grid;
+    grid-gap: 16px;
+    width: 100%;
+  }
+}
+
+// Splash
+
+.context--splash {
+  .header {
+    margin-bottom: 0;
+  }
+
+  .export {
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .export-icon {
+    margin-left: 8px;
+    font-size: 18px;
+  }
+}
+
+.context__body {
+  @include typography.font(intro);
+
+  h2 {
+    @include typography.font(h5);
+  }
+
+  ul,
+  ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: grid;
+    }
+  }
+
+  ul {
+    li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      grid-gap: 12px;
+      padding: 16px 0 16px 4px;
+    }
+  }
+
+  ol {
+    counter-reset: n-list-item; // using own counter due to use of grid
+
+    li {
+      counter-increment: n-list-item;
+      grid-gap: 8px;
+      grid-template-columns: 6.6rem auto;
+      grid-template-areas:
+        'number title'
+        'number text';
+      margin-top: 54px;
+
+      &:first-child {
+        margin-top: 54px - grid.$gap-narrow;
+      }
+
+      &::before {
+        content: counter(n-list-item) '.';
+        font-size: 6rem;
+        grid-area: number;
+        line-height: 1em;
+      }
+
+      > * {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.context__navigation {
+  margin-top: auto;
+}
+
+.splash {
+  background: transparent url('/splash-intro.webp') center no-repeat;
+  background-size: cover;
+
+  &--expenses {
+    background-image: url('/splash-expenses.webp');
+  }
+}

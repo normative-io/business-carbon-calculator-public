@@ -1,0 +1,127 @@
+// Copyright 2022 Meta Mind AB
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@use 'sass:list';
+@use 'sass:map';
+
+@use '@angular/material' as mat;
+@use '@normative/theme/typography' as typography;
+
+// Font weights (for overrides)
+$regular: typography.$font-weight-regular;
+$medium: typography.$font-weight-medium;
+$demibold: typography.$font-weight-demibold;
+
+/// 2018 mapping conversion, following internal Angular Material usage (with Starter extras)
+/// https://github.com/angular/components/blob/master/src/material/core/typography/_typography.scss#L144-L177
+$variants: (
+  h1: map-get(typography.$typography, display-4),
+  h2: map-get(typography.$typography, display-3),
+  h3: map-get(typography.$typography, display-2),
+  h4: map-get(typography.$typography, display-1),
+  h5: map-get(typography.$typography, headline),
+  h6: map-get(typography.$typography, title),
+  subtitle-1: map-get(typography.$typography, subheading-2),
+  subtitle-2: map-get(typography.$typography, subheading-1),
+  intro: mat.define-typography-level(1.8rem, 1.25em, $regular, typography.$font-family),
+  body-1: map-get(typography.$typography, body-1),
+  body-2: map-get(typography.$typography, body-2),
+  caption: map-get(typography.$typography, caption),
+  button: map-get(typography.$typography, button),
+  input:
+    mat.define-typography-level(mat.font-size(typography.$typography, headline), 1, $regular, typography.$font-family),
+);
+
+// Variants to use as a replacement for mobile
+$mobile-breakpoint: 768px;
+$mobile-variants: (
+  h1: h2,
+  h2: h3,
+  h3: h4,
+  h4: h5,
+  h5: h6,
+);
+
+// Variants that should use custom font ligatures by default
+$ligatures-variants: (h1, h2, h3, h4, h5, h6);
+
+/// Sets the font for a variant (based on Material 2018 naming)
+/// @param {string} $variant - The required variant to use
+/// @param {string} $font-size - The required font-size to use (if different to the default)
+/// @param {string} $font-weight - The required font-weight to use (if different to the default)
+/// @param {string} $liguatures - Whether to turn on custom ligatures within the brand font
+/// @param {string} $line-height - The required line-height to use (if different to the default)
+/// @param {string} $mobile-variant - Whether to render a different variant for mobile
+/// @param {string} $numeric - Whether to turn on the numeric font features
+@mixin font(
+  $variant,
+  $font-size: false,
+  $font-weight: false,
+  $ligatures: index($ligatures-variants, $variant) != null,
+  $line-height: false,
+  $mobile-variant: map-get($mobile-variants, $variant),
+  $numeric: false
+) {
+  @if ($ligatures or $numeric) {
+    @include font-settings($ligatures, $numeric);
+  }
+
+  @if ($mobile-variant) {
+    @include font-shorthand($mobile-variant, false, $font-weight, $line-height);
+
+    @include breakpoint() {
+      @include font-shorthand($variant, $font-size, $font-weight, $line-height);
+    }
+  } @else {
+    @include font-shorthand($variant, $font-size, $font-weight, $line-height);
+  }
+}
+
+/// Turns on specifc font features
+/// @param {string} $liguatures - Whether to turn on custom ligatures within the brand font
+/// @param {string} $numeric - Whether to turn on the numeric font features
+@mixin font-settings($ligatures: false, $numeric: false) {
+  $settings: ();
+  @if ($ligatures) {
+    $settings: append($settings, 'ss01' on, $separator: comma);
+    $settings: append($settings, 'ss02' on, $separator: comma);
+  }
+
+  @if ($numeric) {
+    $settings: append($settings, 'tnum' on, $separator: comma);
+    font-variant-numeric: tabular-nums;
+  }
+
+  font-feature-settings: $settings;
+}
+
+/// Wraps the mat.font-shorthand mixin (but based on Material 2018 naming)
+/// @param {string} $variant - The required variant to use (from $variants)
+/// @param {string} $font-size - The required font-size to use (if different to the default)
+/// @param {string} $font-weight - The required font-weight to use (if different to the default)
+/// @param {string} $line-height - The required line-height to use (if different to the default)
+@mixin font-shorthand($variant, $font-size: false, $font-weight: false, $line-height: false) {
+  $font-size: if($font-size, $font-size, mat.font-size($variants, $variant));
+  $font-weight: if($font-weight, $font-weight, mat.font-weight($variants, $variant));
+  $line-height: if($line-height, $line-height, mat.line-height($variants, $variant));
+  $font-family: mat.font-family($variants, $variant);
+  @include mat.font-shorthand($font-size, $font-weight, $line-height, $font-family);
+}
+
+/// Wraps the content in a media query at the breakpoint being used for non-mobile typography styles
+@mixin breakpoint() {
+  @media screen and (min-width: $mobile-breakpoint) {
+    @content;
+  }
+}

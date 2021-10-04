@@ -1,0 +1,88 @@
+<!--
+ Copyright 2022 Meta Mind AB
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<header class="topbar">
+  <h1 aria-label="Business Carbon Calculator by Normative" class="logo">
+    <mat-icon svgIcon="n:n"></mat-icon>
+  </h1>
+
+  <a class="feedback-button" [href]="feedbackLink" (click)="logClick('SendFeedbackClick')" target="_blank">
+    Send feedback <mat-icon class="topbar__icon" svgIcon="n:chat"></mat-icon>
+  </a>
+
+  <button aria-label="Settings" class="icon-button icon-button--settings" mat-icon-button (click)="onSettingsClick()">
+    <mat-icon class="topbar__icon" svgIcon="n:cogwheel"></mat-icon>
+  </button>
+
+  <button aria-label="Account" class="icon-button icon-button--account" mat-icon-button [matMenuTriggerFor]="user">
+    <mat-icon class="topbar__icon" svgIcon="n:avatar"></mat-icon>
+  </button>
+</header>
+
+<mat-menu xPosition="before" #user>
+  <button class="logout" (click)="logout()" mat-menu-item>Logout</button>
+</mat-menu>
+
+<div class="bottom">
+  <div class="overview">
+    <h1>
+      <span class="overview__eyebrow">Company overview</span>
+      <span class="overview__title">{{ organization }}</span>
+    </h1>
+    <dl class="details">
+      <mat-icon *ngIf="sector" class="details__icon" svgIcon="n:capital"></mat-icon>
+      <div *ngIf="sector" class="details__container">
+        <dt class="details__eyebrow">Industry</dt>
+        <dd class="details__title">{{ sector }}</dd>
+      </div>
+
+      <mat-icon *ngIf="country" class="details__icon" svgIcon="n:position"></mat-icon>
+      <div *ngIf="country" class="details__container">
+        <dt class="details__eyebrow">Country</dt>
+        <dd class="details__title">{{ country }}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="edit" *ngIf="entry && options.length">
+    <mat-form-field appearance="fill" class="edit__entries">
+      <mat-label>Time Period</mat-label>
+      <mat-icon matPrefix svgIcon="n:time"></mat-icon>
+      <mat-select [formControl]="selected">
+        <mat-option *ngFor="let option of options" [value]="option.id">{{ option.timePeriod }}</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+
+    <a
+      aria-label="Add time period"
+      class="n-button n-button--outlined add__entry"
+      routerLink="/wizard"
+      (click)="logClick('AddWizardEntryClick')"
+    >
+      Add <span class="edit--hide-on-small-viewports">&nbsp;time period</span> <mat-icon svgIcon="n:plus"></mat-icon>
+    </a>
+
+    <a
+      aria-label="Edit data"
+      class="n-button n-button--outlined edit__entry"
+      [routerLink]="['/wizard', entry._id]"
+      (click)="logClick('EditWizardEntryClick')"
+    >
+      Edit <span class="edit--hide-on-small-viewports">&nbsp;data</span> <mat-icon svgIcon="n:edit"></mat-icon>
+    </a>
+  </div>
+</div>

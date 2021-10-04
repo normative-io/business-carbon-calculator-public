@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "projects": {
+    "starter": {
+      "projectType": "application",
+      "root": "apps/starter",
+      "sourceRoot": "apps/starter/src",
+      "prefix": "business-carbon-calculator",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/starter",
+            "index": "apps/starter/src/index.html",
+            "main": "apps/starter/src/main.ts",
+            "polyfills": "apps/starter/src/polyfills.ts",
+            "tsConfig": "apps/starter/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@normative/theme/src/assets/icon",
+                "output": "/icons/"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/starter/src/assets/images",
+                "output": "/images/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@normative/theme/src/assets/favicons",
+                "output": "/favicons/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@normative/theme/src/assets/external/logos",
+                "output": "/logos/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@normative/theme/src/assets/external/lottie",
+                "output": "/lottie/"
+              }
+            ],
+            "styles": ["apps/starter/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "dev": {
+              "statsJson": true,
+              "sourceMap": true,
+              "index": "apps/starter/src/index.html",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "5kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/starter/src/environments/environment.ts",
+                  "with": "apps/starter/src/environments/environment.dev.ts"
+                },
+                {
+                  "replace": "apps/starter/src/stamp.ts",
+                  "with": "apps/starter/src/stamp.gen.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "prod": {
+              "statsJson": true,
+              "sourceMap": true,
+              "index": "apps/starter/src/index.html",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "5kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/starter/src/environments/environment.ts",
+                  "with": "apps/starter/src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "apps/starter/src/stamp.ts",
+                  "with": "apps/starter/src/stamp.gen.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/starter/src/environments/environment.ts",
+                  "with": "apps/starter/src/environments/environment.local.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "dev"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "dev": {
+              "browserTarget": "starter:build:dev"
+            },
+            "prod": {
+              "browserTarget": "starter:build:prod"
+            },
+            "local": {
+              "browserTarget": "starter:build:local"
+            }
+          },
+          "defaultConfiguration": "local"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "starter:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/starter/src/**/*.ts", "apps/starter/src/**/*.html"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/starter"],
+          "options": {
+            "jestConfig": "apps/starter/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    }
+  }
+}

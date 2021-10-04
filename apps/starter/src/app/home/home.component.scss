@@ -1,0 +1,121 @@
+// Copyright 2022 Meta Mind AB
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@use 'sass:math';
+@use '../../styles/grid' as grid;
+@use '../../styles/typography' as typography;
+
+.grid {
+  @include grid.layout();
+
+  padding-bottom: grid.$gap * 1.5;
+  padding-top: grid.$gap * 1.5;
+}
+
+.column {
+  overflow: visible;
+
+  @include grid.breakpoint() {
+    grid-column: span math.div(grid.$columns, 2);
+  }
+
+  &__title {
+    @include typography.font(h6);
+
+    align-items: baseline;
+    border-bottom: 1px solid #c5c5c5;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding-bottom: 11px;
+  }
+
+  &__title-unit {
+    @include typography.font(body-1);
+  }
+
+  &__title-icon {
+    font-size: 1em;
+    margin-left: 4px;
+  }
+}
+
+.estimate {
+  background-color: #f1f1f4;
+  padding: 24px;
+
+  .title {
+    @include typography.font(h5, $font-weight: typography.$demibold);
+
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  .body {
+    @include typography.font(body-1);
+
+    margin-bottom: 87px;
+
+    .highlight {
+      font-weight: typography.$medium;
+    }
+  }
+}
+
+.scopes {
+  @include grid.breakpoint() {
+    grid-column: span grid.$columns;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #c5c5c5;
+    padding-bottom: 24px;
+  }
+
+  &__title {
+    @include typography.font(h4);
+
+    margin: 0;
+  }
+
+  &__grid {
+    @include grid.layout($mobile-gap: math.div(grid.$gap, 2), $no-gutter: true);
+    @include typography.font(body-1);
+
+    margin: 24px 0 0;
+  }
+
+  &__scope {
+    grid-column: span math.div(grid.$columns, 3);
+  }
+
+  &__description {
+    margin: 8px 0 0;
+  }
+}
+
+h1 {
+  margin: 1em 0 0;
+
+  ::ng-deep strong {
+    color: var(--color-accent);
+    font-weight: inherit;
+  }
+}
+
+.tips {
+  @include grid.breakpoint() {
+    grid-column: span grid.$columns;
+  }
+}

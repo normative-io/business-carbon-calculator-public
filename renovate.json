@@ -1,0 +1,84 @@
+{
+  "extends": ["config:base"],
+  "timezone": "Europe/Stockholm",
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"]
+  },
+  "rangeStrategy": "bump",
+  "unpublishSafe": true,
+  "prCreation": "not-pending",
+  "ignoreDeps": [],
+  "encrypted": {
+    "npmToken": "hRNi5w/xmBxFllVgvirIpxCligTh9ZZGLwGBraUupDETSsww16I86BlXlnorkVR/OgsTz1702A+M1jLW8ol+PDQDkKW+i3c1/HWJg0Zgp4rVBnJmGaZosFVMWNYE89cHr/lKftiXpgjfAINAsFoOBpX42XwpVI3U4ANcGXpOtbqJe10VWZLE4Y3abYrrF04rSPrXXxpmWwbH7wf8nSEGGiEqvsGRDDs/3dB6pfmmRfv0u/02F7eLFy/mXCn37A97wN9E1DbV/yBDrB3/zjqgrjeq/x6GMqAqno1BO7UFfSOr9Wc9VEIDjvtVkJ6LZHQVPB8RObZxfo3s0mGZlwRyyw=="
+  },
+  "packageRules": [
+    {
+      "packageNames": ["node"],
+      "allowedVersions": "<=14"
+    },
+    {
+      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "packageNames": [
+        "@angular/animations",
+        "@angular/common",
+        "@angular/compiler",
+        "@angular/compiler-cli",
+        "@angular/core",
+        "@angular/forms",
+        "@angular/platform-browser",
+        "@angular/platform-browser-dynamic",
+        "@angular/platform-server",
+        "@angular/router"
+      ],
+      "allowedVersions": "<14",
+      "groupName": "Angular monorepo"
+    },
+    {
+      "packageNames": ["@angular/cli", "@angular-devkit/build-angular"],
+      "allowedVersions": "<14",
+      "groupName": "Angular CLI monorepo"
+    },
+    {
+      "packageNames": [
+        "@angular/cdk",
+        "@angular/material",
+        "@angular/material-date-fns-adapter",
+        "@angular/material-luxon-adapter",
+        "@angular/material-moment-adapter"
+      ],
+      "allowedVersions": "<14",
+      "groupName": "Angular Material monorepo"
+    },
+    {
+      "packagePatterns": ["^@ngxs/"],
+      "groupName": "NGXS monorepo"
+    },
+    {
+      "packagePatterns": ["^@sentry/"],
+      "groupName": "Sentry monorepo"
+    },
+    {
+      "extends": "monorepo:nrwl",
+      "groupName": "nrwl monorepo"
+    },
+    {
+      "packageNames": ["rxjs"],
+      "groupName": "Rxjs monorepo",
+      "allowedVersions": "<=7"
+    },
+    {
+      "packageNames": ["@types/node"],
+      "schedule": ["after 6am on monday"],
+      "allowedVersions": "<=14"
+    },
+    {
+      "packageNames": ["typescript"],
+      "allowedVersions": "<4.4.0"
+    }
+  ]
+}

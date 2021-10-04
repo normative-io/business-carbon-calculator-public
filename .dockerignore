@@ -1,0 +1,10 @@
+# Ignore everything by default
+*
+
+# Don't ignore source directories.
+!/apps
+!/scripts
+!/*.*
+!/.nvmrc
+!/.prettierignore
+!/.prettierrc

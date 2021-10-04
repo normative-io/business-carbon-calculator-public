@@ -1,0 +1,60 @@
+<!--
+ Copyright 2022 Meta Mind AB
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<div *ngIf="warning" class="warning" @slideUpDown>
+  <div class="warning__inner">
+    <mat-icon class="warning__icon" svgIcon="n:info"></mat-icon>
+    <p class="warning__message">{{ warning.text }}</p>
+    <p *ngIf="warning.demo" class="warning__message">
+      <a
+        class="warning__demo"
+        href="https://normative.io/book-a-demo/?utm_medium=referral&utm_source=partner&utm_campaign=BCC_product_book_a_demo&utm_content=over_50_prompt"
+        target="_blank"
+      >
+        Book a demo <mat-icon svgIcon="n:arrow-right"></mat-icon>
+      </a>
+    </p>
+  </div>
+</div>
+
+<div class="buttons">
+  <button
+    *ngIf="nextLabel"
+    class="n-button n-button--primary"
+    (click)="next.emit()"
+    data-next
+    type="button"
+    [disabled]="disabled"
+  >
+    {{ nextLabel }}
+    <mat-icon class="n-button__arrow" svgIcon="n:arrow-right"></mat-icon>
+  </button>
+
+  <button *ngIf="exitLabel" class="n-button" (click)="exit.emit()" data-exit type="button" [disabled]="disabled">
+    {{ exitLabel }}
+  </button>
+
+  <button
+    *ngIf="previousLabel"
+    class="n-button"
+    (click)="previous.emit()"
+    data-previous
+    type="button"
+    [disabled]="disabled"
+  >
+    {{ previousLabel }}
+  </button>
+</div>

@@ -1,0 +1,182 @@
+// Copyright 2022 Meta Mind AB
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@use 'sass:meta';
+@use '../../styles/colors' as colors;
+@use '../../styles/grid' as grid;
+@use '../../styles/typography' as typography;
+
+$styleguide-font-family: 'Courier New', Courier, monospace;
+
+:host {
+  @include grid.layout();
+
+  font: 400 14px/1.1em $styleguide-font-family;
+  padding-bottom: grid.$gutter * 4;
+}
+
+// Layout
+
+h1,
+h2 {
+  font-size: 1em;
+  font-weight: 400;
+  margin: 0;
+  padding: grid.$gutter 0 grid.$gutter * 0.5;
+}
+
+h1 {
+  @include grid.breakpoint() {
+    align-self: flex-start;
+    grid-column: 1 / span 2;
+    position: sticky;
+    top: 0;
+  }
+}
+
+section {
+  @include grid.breakpoint() {
+    grid-column: 3 / span (grid.$columns - 4);
+  }
+}
+
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+pre {
+  background-color: #e2f0cb;
+  font: 600 10px/1.1em $styleguide-font-family;
+  margin: 0 0 1px;
+  padding: 12px;
+}
+
+// Typography
+
+.colors {
+  margin-top: grid.$gutter;
+
+  &__palette {
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(9, 1fr);
+
+    + .colors__palette {
+      margin-top: 2px;
+    }
+  }
+
+  &__hue {
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  // loop through all hues in a palette, and asign to class modifier (if a hue)
+  @mixin hues($name, $palette, $primary, $contrast) {
+    @each $hue, $color in $palette {
+      @if type-of($hue) == 'number' and type-of($color) == 'color' {
+        &--#{$name}-#{$hue} {
+          background: meta.call($primary, $hue);
+          color: meta.call($contrast, $hue);
+        }
+      }
+    }
+  }
+
+  @include hues(
+    primary,
+    colors.$primary,
+    meta.get-function('get-primary-color', $module: colors),
+    meta.get-function('get-primary-contrast-color', $module: colors)
+  );
+
+  @include hues(
+    brand,
+    colors.$brand,
+    meta.get-function('get-brand-color', $module: colors),
+    meta.get-function('get-brand-contrast-color', $module: colors)
+  );
+}
+
+// Typography
+
+.typography {
+  margin-top: grid.$gutter;
+
+  &__variant:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  @each $variant, $glyph in typography.$variants {
+    &--#{$variant} {
+      @include typography.font($variant);
+    }
+  }
+}
+
+// Buttons
+
+.buttons {
+  flex-direction: column;
+  margin-top: grid.$gutter;
+
+  &,
+  &__group {
+    display: flex;
+    gap: 8px;
+  }
+
+  &--inverted {
+    background: #000;
+    margin: 0 (grid.$mobile-gutter * -1);
+    padding: grid.$mobile-gutter;
+    width: calc(100% + (grid.$mobile-gutter * 2));
+  }
+}
+
+// Form fields
+
+.fields {
+  display: grid;
+  grid-gap: grid.$gap-narrow;
+  margin-top: grid.$gutter;
+
+  @include grid.breakpoint() {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// Icons
+
+.icons {
+  display: flex;
+  gap: grid.$gap-narrow;
+  flex-wrap: wrap;
+  margin-top: grid.$gutter;
+
+  &__cell {
+    height: 64px;
+    width: 64px;
+  }
+
+  &__icon {
+    height: 100%;
+    width: 100%;
+  }
+}

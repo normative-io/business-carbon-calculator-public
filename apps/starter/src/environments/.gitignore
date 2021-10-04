@@ -1,0 +1,4 @@
+*
+!.gitignore
+!environment.model.ts
+!environment.ts

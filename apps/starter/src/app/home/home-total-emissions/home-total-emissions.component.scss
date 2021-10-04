@@ -1,0 +1,54 @@
+// Copyright 2022 Meta Mind AB
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@use '../../../styles/typography' as typography;
+
+:host {
+  overflow: hidden;
+}
+
+.headline {
+  @include typography.font(h1, $numeric: true);
+
+  margin: 8px 0 36px;
+  overflow-wrap: break-word;
+}
+
+.accuracy {
+  @include typography.font(body-1);
+
+  background-color: #edef8b;
+  max-width: 650px;
+  padding: 16px 24px 16px 16px;
+  width: 100%;
+
+  p {
+    margin: 0;
+
+    + p {
+      margin-top: 10px;
+    }
+  }
+
+  a {
+    color: inherit;
+    font-weight: typography.$demibold;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}

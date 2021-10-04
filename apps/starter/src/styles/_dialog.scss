@@ -1,0 +1,54 @@
+// Copyright 2022 Meta Mind AB
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@use 'grid' as grid;
+
+$small-gutter: grid.$mobile-gutter;
+$large-gutter: 50px;
+
+.cdk-overlay-pane {
+  max-width: calc(100% - #{grid.$mobile-gutter * 2}) !important;
+}
+
+mat-dialog-container.mat-dialog-container {
+  border-radius: 0;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  width: 500px;
+}
+
+mat-dialog-content.mat-dialog-content {
+  margin: 0;
+  max-height: 90vh;
+  padding: $small-gutter;
+  width: 100%;
+
+  &:after {
+    bottom: 0;
+    box-shadow: 0px 0 ($small-gutter * 0.5) ($small-gutter * 0.5) #fff;
+    content: ' ';
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 500px) {
+    padding: $large-gutter;
+
+    &:after {
+      box-shadow: 0px 0 ($large-gutter * 0.5) ($large-gutter * 0.5) #fff;
+    }
+  }
+}

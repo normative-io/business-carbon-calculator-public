@@ -1,0 +1,119 @@
+<!--
+ Copyright 2022 Meta Mind AB
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<ng-container *ngIf="page$ | async as page">
+  <div *ngIf="!(termsOnly$ | async)" class="header">
+    <div class="previous">
+      <button
+        *ngIf="(index$ | async) && !isFinalLoadingPage(page)"
+        class="n-button"
+        (click)="previous()"
+        data-previous
+        type="button"
+      >
+        <mat-icon class="icon" svgIcon="n:arrow-right"></mat-icon>
+        Go back
+      </button>
+    </div>
+
+    <div
+      *ngIf="getDisplayIndex(pages.indexOf(page) + 1) as displayIndex"
+      [attr.aria-valuenow]="displayIndex"
+      [attr.aria-valuemax]="getDisplayTotalPages()"
+      [attr.aria-valuemin]="1"
+      attr.aria-valuetext="Step {{ displayIndex }} of {{ getDisplayTotalPages() }}"
+      class="progress"
+      role="progressbar"
+    >
+      <span class="progress__step">Step</span> {{ displayIndex }} / {{ getDisplayTotalPages() }}
+    </div>
+  </div>
+
+  <form
+    [@.disabled]="direction === AnimationDirection.NONE"
+    class="form"
+    [formGroup]="form"
+    [style.--direction]="direction"
+    (submit)="next()"
+  >
+    <div *ngIf="isFinalLoadingPage(page)" class="spinner-container">
+      <mat-progress-spinner class="spinner" color="primary" mode="indeterminate" [diameter]="44">
+      </mat-progress-spinner>
+    </div>
+
+    <div
+      *ngFor="let currentPage of [page]"
+      class="body"
+      [@slideQuestions]
+      (@slideQuestions.start)="animationStart($event)"
+    >
+      <div class="body__inner">
+        <h1 *ngIf="page.title" class="n-h3 title" id="title" [innerHtml]="boldify(page.title)"></h1>
+        <p *ngIf="page.subtitle" class="subtitle">{{ page.subtitle }}</p>
+
+        <div *ngIf="page.id === 'terms'" class="terms">
+          <n-onboarding-terms></n-onboarding-terms>
+          <label class="n-checkbox" [for]="page.id">
+            I accept the terms and conditions
+            <input class="input" type="checkbox" [id]="page.id" [name]="page.id" [formControlName]="page.id" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
+
+        <mat-form-field *ngIf="page.field as field" appearance="fill" class="input">
+          <input
+            *ngIf="field.type === 'text'"
+            aria-labelledby="title"
+            [errorStateMatcher]="errorStateMatcher"
+            [formControlName]="page.field.path"
+            [id]="page.id"
+            matInput
+            [placeholder]="field.placeholder ?? ''"
+            type="text"
+            #input
+          />
+
+          <mat-select
+            *ngIf="field.type !== 'text'"
+            aria-labelledby="title"
+            [errorStateMatcher]="errorStateMatcher"
+            [formControlName]="page.field.path"
+            [id]="page.id"
+            [placeholder]="field.placeholder ?? ''"
+            #input
+          >
+            <mat-option
+              *ngFor="let option of (field.type === 'countries' ? countriesOptions$ : sectorsOptions$) | async"
+              [value]="option.value"
+            >
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+          <mat-icon *ngIf="field.type !== 'text'" matSuffix svgIcon="n:chevron"></mat-icon>
+        </mat-form-field>
+
+        <button
+          *ngIf="pages.indexOf(page) < getDisplayTotalPages()"
+          class="n-button n-button--primary continue"
+          [disabled]="!(valid$ | async)"
+        >
+          {{ page.buttonText ?? 'Continue' }}
+          <mat-icon class="icon" svgIcon="n:arrow-right"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-container>

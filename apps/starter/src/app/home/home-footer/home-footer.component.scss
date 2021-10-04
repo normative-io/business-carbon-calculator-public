@@ -1,0 +1,84 @@
+// Copyright 2022 Meta Mind AB
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@use '../../../styles/grid' as grid;
+@use '../../../styles/typography' as typography;
+
+.footer {
+  background: #f1f1f4;
+  color: #606062;
+  padding: 28px 0;
+}
+
+.inner {
+  @include grid.layout($mobile-columns: grid.$columns, $mobile-gap: grid.$gap-narrow);
+  @include typography.font(body-1);
+
+  text-align: center;
+}
+
+.copyright {
+  grid-column: span grid.$columns;
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  grid-column: span grid.$columns;
+  list-style: none;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  appearance: none;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: none;
+  transition: color 0.1s ease-in-out;
+
+  &:hover,
+  &:focus {
+    color: #000;
+  }
+}
+
+@media (min-width: 700px) {
+  .links {
+    flex-direction: row;
+    gap: 32px;
+  }
+}
+
+@media (min-width: 920px) {
+  .inner {
+    text-align: initial;
+  }
+
+  .copyright {
+    grid-column: span 4;
+  }
+
+  .links {
+    grid-column: span 8;
+    justify-content: flex-end;
+  }
+}

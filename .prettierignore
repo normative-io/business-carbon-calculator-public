@@ -1,0 +1,7 @@
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
+
+# Generated file; don't try to auto-format it.
+/apps/starter/src/stamp.gen.ts

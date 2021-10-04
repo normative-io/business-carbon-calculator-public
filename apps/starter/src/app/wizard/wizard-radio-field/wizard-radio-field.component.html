@@ -1,0 +1,37 @@
+<!--
+ Copyright 2022 Meta Mind AB
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<fieldset class="group">
+  <n-wizard-label *ngIf="field.label" [eyebrow]="eyebrow" [field]="field"></n-wizard-label>
+
+  <div *ngFor="let option of field.options" class="n-radio">
+    <input
+      class="n-radio__input"
+      type="radio"
+      [name]="field.path"
+      [value]="option.value"
+      [formControl]="$any(form.get(field.path))"
+      [id]="option.value"
+    />
+    <label class="n-radio__label" [for]="option.value">
+      {{ option.label }}
+      <span *ngIf="option.value === null" class="share-prompt">
+        Share question with someone who would know
+        <mat-icon class="share-icon">ios_share</mat-icon>
+      </span>
+    </label>
+  </div>
+</fieldset>

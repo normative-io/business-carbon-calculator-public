@@ -1,0 +1,157 @@
+<!--
+ Copyright 2022 Meta Mind AB
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<h1>styleguide</h1>
+
+<section>
+  <h2>colors</h2>
+  <pre>{{ snippets.colors }}</pre>
+
+  <div class="colors">
+    <ul
+      *ngFor="
+        let palette of [
+          { name: 'primary', hues: primary },
+          { name: 'brand', hues: brand }
+        ]
+      "
+      class="colors__palette"
+    >
+      <li *ngFor="let hue of palette.hues" class="colors__hue colors--{{ palette.name }}-{{ hue }}">{{ hue }}</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>typography</h2>
+  <pre>{{ snippets.typography }}</pre>
+
+  <ul class="typography">
+    <li *ngFor="let variant of variants" class="typography__variant typography--{{ variant.id }}">
+      {{ variant.name }}
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>buttons</h2>
+  <pre>{{ snippets.button }}</pre>
+
+  <div class="buttons">
+    <div class="buttons__group">
+      <button class="n-button">Button</button>
+      <button class="n-button" disabled>Button (disabled)</button>
+    </div>
+    <div class="buttons__group">
+      <button class="n-button n-button--primary">Primary</button>
+      <button class="n-button n-button--primary" disabled>Primary (disabled)</button>
+    </div>
+    <div class="buttons__group buttons--inverted">
+      <button class="n-button n-button--outlined">Button (outlined)</button>
+      <button class="n-button n-button--outlined" disabled>Button (disabled/outlined)</button>
+    </div>
+    <div class="buttons__group">
+      <button class="n-button n-button--outlined n-button--primary">Primary (outlined)</button>
+      <button class="n-button n-button--outlined n-button--primary" disabled>Primary (disabled/outlined)</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>form fields</h2>
+  <pre>{{ snippets.input }}</pre>
+  <pre>{{ snippets.select }}</pre>
+
+  <div class="fields" [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="Placeholder" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-select placeholder="Placeholder">
+        <mat-option value="1">Option 1</mat-option>
+        <mat-option value="2">Option 2</mat-option>
+        <mat-option value="3">Option 3</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>With label</mat-label>
+      <input matInput placeholder="Placeholder" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>With label</mat-label>
+      <mat-select placeholder="Placeholder">
+        <mat-option value="1">Option 1</mat-option>
+        <mat-option value="2">Option 2</mat-option>
+        <mat-option value="3">Option 3</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Outlined</mat-label>
+      <input matInput placeholder="Placeholder" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Outlined</mat-label>
+      <mat-select placeholder="Placeholder">
+        <mat-option value="1">Option 1</mat-option>
+        <mat-option value="2">Option 2</mat-option>
+        <mat-option value="3">Option 3</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <input matInput formControlName="invalid1" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-select formControlName="invalid2">
+        <mat-option value="Invalid">Invalid</mat-option>
+        <mat-option value="Invalid 2">Invalid 2</mat-option>
+        <mat-option value="Invalid 3">Invalid 3</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <input matInput formControlName="disabled" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-select formControlName="disabled">
+        <mat-option value="Disabled">Disabled</mat-option>
+      </mat-select>
+      <mat-icon matSuffix svgIcon="n:chevron"></mat-icon>
+    </mat-form-field>
+  </div>
+</section>
+
+<section>
+  <h2>icons</h2>
+  <pre>{{ snippets.icon }}</pre>
+
+  <ul class="icons">
+    <li *ngFor="let icon of icons" class="icons__cell">
+      <mat-icon class="icons__icon" [svgIcon]="'n:' + icon"></mat-icon>
+    </li>
+  </ul>
+</section>
