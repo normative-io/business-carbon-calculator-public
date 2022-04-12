@@ -103,3 +103,10 @@ To view these shared components, a simplestyle guide can be enabled in the [envi
 ## Contributing
 
 This project is maintained by Normative but currently not actively seeking external contributions. If you however are interested in contributing to the project please [sign up here](https://docs.google.com/forms/d/e/1FAIpQLSe80c9nrHlAq6w2vUbeFSPVGG7IPqorKMkizhHJ98viwnT-OA/viewform?usp=sf_link) or come [join us](https://normative.io/jobs/).
+
+Thank you to the people from Google.org who were critical in making this project a reality!
+
+## License
+Copyright (c) Meta Mind AB. All rights reserved.
+
+Licensed under the [Apache-2.0 license](/LICENSE)
