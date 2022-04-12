@@ -83,7 +83,13 @@ To view these shared components, a simplestyle guide can be enabled in the [envi
 
 This project is maintained by Normative but currently not actively seeking external contributions. If you however are interested in contributing to the project please [sign up here](https://docs.google.com/forms/d/e/1FAIpQLSe80c9nrHlAq6w2vUbeFSPVGG7IPqorKMkizhHJ98viwnT-OA/viewform?usp=sf_link) or come [join us](https://normative.io/jobs/).
 
-Thank you to the people from Google.org who were critical in making this project a reality!
+Thank you to all the people from Google.org who were critical in making this project a reality!
+- Zachary Hynes ([@zhynes](https://github.com/zhynes))
+- John Bartholomew ([@johnbartholomew](https://github.com/johnbartholomew))
+- Craig Rogers ([@twentyrogersc](https://github.com/twentyrogersc))
+- Megan Hopp ([@meganhopp](https://github.com/meganhopp))
+- Mishu Garg ([@mishugarg09](https://github.com/mishugarg09))
+- Matt Pellegrini ([@MattPellegrini](https://github.com/MattPellegrini))
 
 ## License
 Copyright (c) Meta Mind AB. All rights reserved.
